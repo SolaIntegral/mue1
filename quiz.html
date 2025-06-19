@@ -2,14 +2,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>サステナクイズ</title>
+  <title>サステナクイズ | 未来への羅針盤（Compass for Tomorrow）</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="nav-placeholder"></div>
-  <main style="padding:40px;">
-    <h1>サステナクイズ</h1>
-    <p>このページは仮の内容です。</p>
+  <main class="quiz-main">
+    <div class="quiz-container">
+      <div class="quiz-progress"><span id="quiz-current">1</span> / <span id="quiz-total">5</span></div>
+      <div class="quiz-question" id="quiz-question">ここに質問文が入ります</div>
+      <div class="quiz-choices" id="quiz-choices"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <button class="quiz-next-btn" id="quiz-next-btn" style="display:none;">次の問題へ</button>
+      <div class="quiz-result" id="quiz-result" style="display:none;"></div>
+      <div class="quiz-actions" id="quiz-actions" style="display:none;"></div>
+    </div>
   </main>
   <script>
     fetch('nav.html')
@@ -21,5 +29,7 @@
         document.body.appendChild(script);
       });
   </script>
+  <script src="quizData.js"></script>
+  <script src="quiz.js"></script>
 </body>
 </html> 

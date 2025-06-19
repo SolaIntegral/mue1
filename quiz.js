@@ -1,31 +1,9 @@
-// ドロップダウンのクリック動作（スマホ対応）
-document.querySelectorAll('.tte-dropdown-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    // PCではhoverで開くので、スマホのみtoggle
-    if (window.innerWidth <= 900) {
-      e.preventDefault();
-      const content = this.nextElementSibling;
-      const isOpen = content.style.display === 'flex';
-      document.querySelectorAll('.tte-dropdown-content').forEach(c => c.style.display = 'none');
-      content.style.display = isOpen ? 'none' : 'flex';
-    }
-  });
-});
-
-// 画面外クリックでドロップダウンを閉じる（スマホのみ）
-document.addEventListener('click', function(e) {
-  if (window.innerWidth <= 900) {
-    if (!e.target.closest('.tte-dropdown')) {
-      document.querySelectorAll('.tte-dropdown-content').forEach(c => c.style.display = 'none');
-    }
-  }
-});
-
-// サステナクイズ画面のロジック
-// quizData.jsのquizDataを利用
-
+// サステナクイズ画面のロジック（quiz.html専用）
 document.addEventListener('DOMContentLoaded', function () {
-  if (!window.quizData) return;
+  if (!window.quizData || !Array.isArray(window.quizData) || window.quizData.length === 0) {
+    document.getElementById('quiz-question').textContent = 'クイズデータが読み込まれていません。';
+    return;
+  }
 
   const questionEl = document.getElementById('quiz-question');
   const choicesEl = document.getElementById('quiz-choices');

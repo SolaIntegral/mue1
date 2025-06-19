@@ -2,14 +2,91 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Think the Earth - パートナー</title>
+  <title>未来への羅針盤（Compass for Tomorrow） | サステナビリティMeetup 2025</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!--#include file="nav.html" -->
+  <div id="nav-placeholder"></div>
   <main>
-    <!-- メインコンテンツ -->
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="site-title">未来への羅針盤<br><span class="site-title-en">Compass for Tomorrow</span></h1>
+        <p class="hero-catch">50年後の私と、今の地球。未来は、あなたの手の中に。</p>
+        <p class="hero-lead">あなたの今の選択が、未来の自分と地球をどう変えるのか。<br>インタラクティブな体験を通じて、持続可能な未来への一歩を踏み出しましょう。</p>
+        <div class="hero-actions">
+          <a href="future.html" class="hero-btn accent">未来の自分をシミュレーションする</a>
+          <a href="quiz.html" class="hero-btn">サステナビリティについて学ぶ</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept-section">
+      <h2>未来は、あなたの選択で変わる</h2>
+      <div class="concept-content">
+        <div class="concept-icon">
+          <img src="earth_person.svg" alt="地球と人のつながり" />
+        </div>
+        <div class="concept-text">
+          <p>私たちは、今の行動が未来に与える影響を想像しにくいものです。このサイトでは、AIを活用したシミュレーションや、楽しいクイズ、日々の取り組みの共有を通じて、サステナビリティが「自分ごと」として感じられる体験を提供します。</p>
+          <p>未来の自分を知ることが、未来の地球を救う一歩になる——そんな気づきを、ここから。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <h2>主な機能</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><img src="quiz_icon.svg" alt="クイズアイコン"></div>
+          <h3>サステナクイズ</h3>
+          <p>楽しく学びながら、サステナビリティの知識を深めましょう。</p>
+          <a href="quiz.html" class="feature-btn">クイズに挑戦</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><img src="future_icon.svg" alt="未来シミュレーションアイコン"></div>
+          <h3>未来の自分シミュレーション</h3>
+          <p>AIと一緒に、2050年の自分の姿を体験してみませんか？</p>
+          <a href="future.html" class="feature-btn accent">シミュレーションする</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><img src="share_icon.svg" alt="共有アイコン"></div>
+          <h3>身近なサステナビリティ共有</h3>
+          <p>あなたの日々の取り組みやアイデアを、みんなとシェアしましょう。</p>
+          <a href="share.html" class="feature-btn">共有する</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Section -->
+    <section class="project-section">
+      <h2>このプロジェクトについて</h2>
+      <div class="project-content">
+        <div class="project-info">
+          <p><strong>Sustainable Meetup 2025</strong> 開催予定：2025年5月24日（土） 東京・有明</p>
+          <p>「Project Any」は、未来の地球と自分のために、今できることを考え、行動する人々を応援するプロジェクトです。</p>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-btn">イベント詳細へ</a>
+          <a href="#" class="project-btn">Project Anyについて</a>
+        </div>
+      </div>
+    </section>
   </main>
-  <script src="script.js"></script>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+        var script = document.createElement('script');
+        script.src = 'nav.js';
+        document.body.appendChild(script);
+      });
+  </script>
 </body>
 </html> 

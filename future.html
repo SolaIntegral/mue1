@@ -2,14 +2,18 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>2050年の自分（未来の自分シミュレーション）</title>
+  <title>2050年の自分シミュレーション | 未来への羅針盤</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="nav-placeholder"></div>
-  <main style="padding:40px;">
-    <h1>2050年の自分（未来の自分シミュレーション）</h1>
-    <p>このページは仮の内容です。</p>
+  <main class="future-main">
+    <div class="sim-container">
+      <div id="sim-progress-bar" class="sim-progress-bar"><div id="sim-progress" class="sim-progress"></div></div>
+      <div id="sim-question-area" class="sim-question-area"></div>
+      <div id="sim-result-area" class="sim-result-area" style="display:none;"></div>
+    </div>
   </main>
   <script>
     fetch('nav.html')
@@ -21,5 +25,7 @@
         document.body.appendChild(script);
       });
   </script>
+  <script src="simulationData.js"></script>
+  <script src="future.js"></script>
 </body>
 </html> 

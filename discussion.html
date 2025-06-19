@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>サステナディスカッションまとめ</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="nav-placeholder"></div>
-  <main style="padding:40px;">
-    <h1>サステナディスカッションまとめ</h1>
-    <p>このページは仮の内容です。</p>
+  <main class="discussion-main">
+    <div id="discussion-list-view"></div>
+    <div id="discussion-detail-view" style="display:none;"></div>
   </main>
   <script>
     fetch('nav.html')
@@ -21,5 +22,7 @@
         document.body.appendChild(script);
       });
   </script>
+  <script src="discussionData.js"></script>
+  <script src="discussion.js"></script>
 </body>
 </html> 
