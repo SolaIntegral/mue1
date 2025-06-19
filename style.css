@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+  background: #eaf6fb;
+}
+
+.tte-header {
+  background: linear-gradient(180deg, #8fd3c8 0%, #4fc3e6 100%);
+  padding-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.tte-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px 0 40px;
+}
+
+.tte-header-catch {
+  color: #fff;
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+}
+
+.tte-header-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.tte-header-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  margin-right: 8px;
+}
+
+.tte-header-search {
+  font-size: 1.3em;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tte-header-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 0 0;
+}
+
+.tte-header-logo {
+  font-size: 2.5em;
+  color: #fff;
+  font-family: 'Comic Sans MS', 'Hiragino Sans', cursive, sans-serif;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+}
+
+.tte-logo-earth {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+
+.tte-nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 30px 0 0 0;
+  flex-wrap: wrap;
+}
+
+.tte-dropdown {
+  position: relative;
+}
+
+.tte-dropdown-btn {
+  background: #4fc3e6;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 18px 40px;
+  font-size: 1.3em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: normal;
+}
+
+.tte-dropdown-btn:hover,
+.tte-dropdown-btn:focus {
+  background: #fff;
+  color: #4fc3e6;
+}
+
+.tte-arrow {
+  font-size: 0.8em;
+}
+
+.tte-dropdown-content {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  min-width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  z-index: 10;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.tte-dropdown-content a {
+  color: #4fc3e6;
+  padding: 12px 24px;
+  text-decoration: none;
+  display: block;
+  font-size: 1.1em;
+  transition: background 0.2s;
+}
+
+.tte-dropdown-content a:hover {
+  background: #eaf6fb;
+}
+
+.tte-dropdown:hover .tte-dropdown-content,
+.tte-dropdown:focus-within .tte-dropdown-content {
+  display: flex;
+}
+
+.tte-dropdown-btn.active {
+  background: #fff !important;
+  color: #4fc3e6 !important;
+}
+
+@media (max-width: 900px) {
+  .tte-header-top, .tte-header-main, .tte-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 16px;
+  }
+  .tte-nav {
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .tte-dropdown-btn {
+    padding: 12px 18px;
+    font-size: 1em;
+  }
+} 

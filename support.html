@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ご支援・ご参加のお願い</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main style="padding:40px;">
+    <h1>ご支援・ご参加のお願い</h1>
+    <p>このページは仮の内容です。</p>
+  </main>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+        var script = document.createElement('script');
+        script.src = 'nav.js';
+        document.body.appendChild(script);
+      });
+  </script>
+</body>
+</html> 
