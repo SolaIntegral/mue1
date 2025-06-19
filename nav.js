@@ -2,12 +2,12 @@
 const path = location.pathname.split('/').pop();
 
 const navMap = {
-  'about.html': 'nav-about',
-  'activity.html': 'nav-activity',
-  'partner.html': 'nav-partner',
-  'support.html': 'nav-support',
-  'index.html': 'nav-about', // index.htmlはabout.html扱い
-  '': 'nav-about', // ルートアクセス時
+  'quiz.html': 'nav-quiz',
+  'discussion.html': 'nav-discussion',
+  'share.html': 'nav-share',
+  'future.html': 'nav-future',
+  'index.html': 'nav-quiz', // index.htmlはquiz.html扱い
+  '': 'nav-quiz', // ルートアクセス時
 };
 
 const activeId = navMap[path];
