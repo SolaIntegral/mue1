@@ -1,4 +1,6 @@
 // 2050年の自分シミュレーション用データ
+console.log('=== simulationData.js 読み込み開始 ===');
+
 const simulationCategories = [
   {
     id: 'food',
@@ -108,4 +110,15 @@ const simulationResults = {
     co2: 6.0,
     message: 'サステナブルな選択を続けることで、2050年も健康で豊かな生活と美しい地球を守ることができます！'
   }
-}; 
+};
+
+console.log('simulationCategories定義完了:', simulationCategories);
+console.log('simulationResults定義完了:', simulationResults);
+console.log('windowオブジェクトに設定:', typeof window !== 'undefined');
+if (typeof window !== 'undefined') {
+  window.simulationCategories = simulationCategories;
+  window.simulationResults = simulationResults;
+  console.log('window.simulationCategories設定完了:', window.simulationCategories);
+  console.log('window.simulationResults設定完了:', window.simulationResults);
+}
+console.log('=== simulationData.js 読み込み完了 ==='); 

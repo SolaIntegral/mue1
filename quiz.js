@@ -1,10 +1,24 @@
-// サステナクイズ画面のロジック（quiz.html専用）
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  console.log('=== クイズスクリプト開始 ===');
+  
+  // サステナクイズ画面のロジック（quiz.html専用）
+  console.log('quizDataの確認:', window.quizData);
+  console.log('quizDataの型:', typeof window.quizData);
+  console.log('quizDataが配列か:', Array.isArray(window.quizData));
+  console.log('quizDataの長さ:', window.quizData ? window.quizData.length : 'undefined');
+  
   if (!window.quizData || !Array.isArray(window.quizData) || window.quizData.length === 0) {
-    document.getElementById('quiz-question').textContent = 'クイズデータが読み込まれていません。';
+    console.error('クイズデータが正しく読み込まれていません');
+    const questionEl = document.getElementById('quiz-question');
+    if (questionEl) {
+      questionEl.textContent = 'クイズデータが読み込まれていません。';
+    } else {
+      console.error('quiz-question要素が見つかりません');
+    }
     return;
   }
 
+  console.log('DOM要素の取得を開始');
   const questionEl = document.getElementById('quiz-question');
   const choicesEl = document.getElementById('quiz-choices');
   const feedbackEl = document.getElementById('quiz-feedback');
@@ -14,13 +28,31 @@ document.addEventListener('DOMContentLoaded', function () {
   const currentEl = document.getElementById('quiz-current');
   const totalEl = document.getElementById('quiz-total');
 
+  console.log('DOM要素の確認:');
+  console.log('- questionEl:', questionEl);
+  console.log('- choicesEl:', choicesEl);
+  console.log('- feedbackEl:', feedbackEl);
+  console.log('- nextBtn:', nextBtn);
+  console.log('- resultEl:', resultEl);
+  console.log('- actionsEl:', actionsEl);
+  console.log('- currentEl:', currentEl);
+  console.log('- totalEl:', totalEl);
+
+  // 必要な要素が見つからない場合はエラー
+  if (!questionEl || !choicesEl || !feedbackEl || !nextBtn || !resultEl || !actionsEl || !currentEl || !totalEl) {
+    console.error('必要なDOM要素が見つかりません');
+    return;
+  }
+
   let current = 0;
   let correctCount = 0;
   let answered = false;
 
+  console.log('初期化完了 - クイズ開始');
   totalEl.textContent = quizData.length;
 
   function showQuestion() {
+    console.log('showQuestion() 実行 - 問題番号:', current + 1);
     answered = false;
     feedbackEl.textContent = '';
     feedbackEl.className = 'quiz-feedback';
@@ -29,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     actionsEl.style.display = 'none';
     currentEl.textContent = current + 1;
     const q = quizData[current];
+    console.log('現在の問題:', q);
     questionEl.textContent = q.question;
     // 選択肢生成
     choicesEl.innerHTML = '';
@@ -39,9 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.onclick = () => selectAnswer(idx, btn);
       choicesEl.appendChild(btn);
     });
+    console.log('問題表示完了');
   }
 
   function selectAnswer(idx, btn) {
+    console.log('selectAnswer() 実行 - 選択肢:', idx);
     if (answered) return;
     answered = true;
     const q = quizData[current];
@@ -55,9 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
       correctCount++;
       feedbackEl.innerHTML = '正解！<span class="explanation">' + q.explanation + '</span>';
       feedbackEl.className = 'quiz-feedback correct';
+      console.log('正解！ 現在の正解数:', correctCount);
     } else {
       feedbackEl.innerHTML = '不正解…<span class="explanation">正解：' + q.choices[q.answer] + '<br>' + q.explanation + '</span>';
       feedbackEl.className = 'quiz-feedback incorrect';
+      console.log('不正解… 現在の正解数:', correctCount);
     }
     nextBtn.style.display = 'inline-block';
     if (current === quizData.length - 1) {
@@ -68,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   nextBtn.onclick = function () {
+    console.log('次の問題ボタンクリック - 現在の問題:', current + 1, '/', quizData.length);
     if (current < quizData.length - 1) {
       current++;
       showQuestion();
@@ -77,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   function showResult() {
+    console.log('showResult() 実行 - 最終スコア:', correctCount, '/', quizData.length);
     questionEl.textContent = '';
     choicesEl.innerHTML = '';
     feedbackEl.textContent = '';
@@ -99,5 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 初期表示
+  console.log('初期問題表示を開始');
   showQuestion();
-}); 
+  console.log('=== クイズスクリプト初期化完了 ===');
+})(); 

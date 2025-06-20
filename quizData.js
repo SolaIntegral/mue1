@@ -1,4 +1,6 @@
 // サステナクイズ用データ（仮データ）
+console.log('=== quizData.js 読み込み開始 ===');
+
 const quizData = [
   {
     question: 'サステナビリティの「3R」に含まれるものはどれ？',
@@ -30,4 +32,13 @@ const quizData = [
     answer: 0,
     explanation: '2050年までに温室効果ガス排出量を実質ゼロにすることを目指します。'
   }
-]; 
+];
+
+console.log('quizData定義完了:', quizData);
+console.log('quizDataの長さ:', quizData.length);
+console.log('window.quizDataに設定:', typeof window !== 'undefined');
+if (typeof window !== 'undefined') {
+  window.quizData = quizData;
+  console.log('window.quizData設定完了:', window.quizData);
+}
+console.log('=== quizData.js 読み込み完了 ==='); 

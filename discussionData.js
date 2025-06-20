@@ -1,4 +1,6 @@
 // サステナディスカッションまとめ用データ
+console.log('=== discussionData.js 読み込み開始 ===');
+
 const discussionData = [
   {
     id: 'd1',
@@ -81,4 +83,13 @@ const discussionData = [
       { text: 'SDGs教育の実践例', url: 'https://example.com/sdgs-edu' }
     ]
   }
-]; 
+];
+
+console.log('discussionData定義完了:', discussionData);
+console.log('discussionDataの長さ:', discussionData.length);
+console.log('window.discussionDataに設定:', typeof window !== 'undefined');
+if (typeof window !== 'undefined') {
+  window.discussionData = discussionData;
+  console.log('window.discussionData設定完了:', window.discussionData);
+}
+console.log('=== discussionData.js 読み込み完了 ==='); 

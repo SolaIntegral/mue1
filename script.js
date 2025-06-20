@@ -1,125 +1,67 @@
-// ドロップダウンのクリック動作（スマホ対応）
-document.querySelectorAll('.tte-dropdown-btn').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    // PCではhoverで開くので、スマホのみtoggle
-    if (window.innerWidth <= 900) {
-      e.preventDefault();
-      const content = this.nextElementSibling;
-      const isOpen = content.style.display === 'flex';
-      document.querySelectorAll('.tte-dropdown-content').forEach(c => c.style.display = 'none');
-      content.style.display = isOpen ? 'none' : 'flex';
-    }
-  });
+// 全ページ共通のスクリプト
+console.log('=== script.js 読み込み開始 ===');
+
+/**
+ * ナビゲーションを読み込んで表示する
+ */
+function loadNavigation() {
+  console.log('loadNavigation() 実行開始');
+  // すべてのページでnav.htmlを読み込む
+  fetch('nav.html')
+    .then(res => {
+      console.log('nav.html fetch結果:', res.status, res.statusText);
+      if (!res.ok) {
+        throw new Error('nav.htmlの読み込みに失敗しました。');
+      }
+      return res.text();
+    })
+    .then(html => {
+      console.log('nav.html取得成功、長さ:', html.length);
+      const navPlaceholder = document.getElementById('nav-placeholder');
+      if (navPlaceholder) {
+        console.log('nav-placeholder要素発見、HTML設定');
+        navPlaceholder.innerHTML = html;
+        // ナビゲーションが読み込まれた後に、ナビゲーション用のJSを読み込む
+        loadNavScript();
+      } else {
+        console.error('nav-placeholder要素が見つかりません');
+      }
+    })
+    .catch(error => {
+      console.error('nav.html読み込みエラー:', error);
+      const navPlaceholder = document.getElementById('nav-placeholder');
+      if (navPlaceholder) {
+        navPlaceholder.innerHTML = '<p style="color: red; text-align: center;">ナビゲーションの読み込みに失敗しました。</p>';
+      }
+    });
+}
+
+/**
+ * ナビゲーション用のJavaScriptを読み込む
+ */
+function loadNavScript() {
+  console.log('loadNavScript() 実行開始');
+  // 既存のnav.jsスクリプトがあれば削除
+  const existingScript = document.querySelector('script[src="nav.js"]');
+  if (existingScript) {
+    console.log('既存のnav.jsスクリプトを削除');
+    existingScript.remove();
+  }
+
+  // 新しいスクリプトタグを作成して追加
+  const script = document.createElement('script');
+  script.src = 'nav.js';
+  script.defer = true; // DOM解析後に実行
+  console.log('nav.jsスクリプトタグ作成:', script);
+  document.body.appendChild(script);
+  console.log('nav.jsスクリプト追加完了');
+}
+
+// DOMが読み込まれたらナビゲーションを読み込む
+console.log('DOMContentLoadedイベントリスナー設定');
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded発火 - loadNavigation()実行');
+  loadNavigation();
 });
 
-// 画面外クリックでドロップダウンを閉じる（スマホのみ）
-document.addEventListener('click', function(e) {
-  if (window.innerWidth <= 900) {
-    if (!e.target.closest('.tte-dropdown')) {
-      document.querySelectorAll('.tte-dropdown-content').forEach(c => c.style.display = 'none');
-    }
-  }
-});
-
-// サステナクイズ画面のロジック
-// quizData.jsのquizDataを利用
-
-document.addEventListener('DOMContentLoaded', function () {
-  if (!window.quizData) return;
-
-  const questionEl = document.getElementById('quiz-question');
-  const choicesEl = document.getElementById('quiz-choices');
-  const feedbackEl = document.getElementById('quiz-feedback');
-  const nextBtn = document.getElementById('quiz-next-btn');
-  const resultEl = document.getElementById('quiz-result');
-  const actionsEl = document.getElementById('quiz-actions');
-  const currentEl = document.getElementById('quiz-current');
-  const totalEl = document.getElementById('quiz-total');
-
-  let current = 0;
-  let correctCount = 0;
-  let answered = false;
-
-  totalEl.textContent = quizData.length;
-
-  function showQuestion() {
-    answered = false;
-    feedbackEl.textContent = '';
-    feedbackEl.className = 'quiz-feedback';
-    nextBtn.style.display = 'none';
-    resultEl.style.display = 'none';
-    actionsEl.style.display = 'none';
-    currentEl.textContent = current + 1;
-    const q = quizData[current];
-    questionEl.textContent = q.question;
-    // 選択肢生成
-    choicesEl.innerHTML = '';
-    q.choices.forEach((choice, idx) => {
-      const btn = document.createElement('button');
-      btn.className = 'quiz-choice-btn';
-      btn.textContent = choice;
-      btn.onclick = () => selectAnswer(idx, btn);
-      choicesEl.appendChild(btn);
-    });
-  }
-
-  function selectAnswer(idx, btn) {
-    if (answered) return;
-    answered = true;
-    const q = quizData[current];
-    // 全ボタンをdisabledに
-    Array.from(choicesEl.children).forEach((b, i) => {
-      b.disabled = true;
-      if (i === q.answer) b.classList.add('correct');
-      if (i === idx && idx !== q.answer) b.classList.add('incorrect');
-    });
-    if (idx === q.answer) {
-      correctCount++;
-      feedbackEl.innerHTML = '正解！<span class="explanation">' + q.explanation + '</span>';
-      feedbackEl.className = 'quiz-feedback correct';
-    } else {
-      feedbackEl.innerHTML = '不正解…<span class="explanation">正解：' + q.choices[q.answer] + '<br>' + q.explanation + '</span>';
-      feedbackEl.className = 'quiz-feedback incorrect';
-    }
-    nextBtn.style.display = 'inline-block';
-    if (current === quizData.length - 1) {
-      nextBtn.textContent = '結果を見る';
-    } else {
-      nextBtn.textContent = '次の問題へ';
-    }
-  }
-
-  nextBtn.onclick = function () {
-    if (current < quizData.length - 1) {
-      current++;
-      showQuestion();
-    } else {
-      showResult();
-    }
-  };
-
-  function showResult() {
-    questionEl.textContent = '';
-    choicesEl.innerHTML = '';
-    feedbackEl.textContent = '';
-    nextBtn.style.display = 'none';
-    resultEl.style.display = 'block';
-    actionsEl.style.display = 'flex';
-    resultEl.innerHTML = `あなたの正解数：<strong>${correctCount} / ${quizData.length}</strong><br>` +
-      getResultMessage(correctCount, quizData.length);
-    actionsEl.innerHTML =
-      '<a href="quiz.html">もう一度挑戦する</a>' +
-      '<a href="future.html">未来の自分シミュレーションを試す</a>' +
-      '<a href="share.html">身近なサステナビリティ共有へ</a>';
-  }
-
-  function getResultMessage(score, total) {
-    if (score === total) return 'サステナビリティマスター！素晴らしい知識です。';
-    if (score >= total - 1) return 'あと少しで満点！よく頑張りました。';
-    if (score >= Math.floor(total / 2)) return 'なかなかの健闘です。もっと学んでみましょう！';
-    return 'これからがスタート！サステナビリティについて一緒に学びましょう。';
-  }
-
-  // 初期表示
-  showQuestion();
-}); 
+console.log('=== script.js 読み込み完了 ==='); 
