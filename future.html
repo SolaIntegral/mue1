@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>2050年の自分シミュレーション | 未来への羅針盤（Compass for Tomorrow）</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="style.css">
   <script>
     console.log('=== future.html head内スクリプト実行 ===');
     console.log('現在のURL:', window.location.href);
@@ -28,31 +28,21 @@
     console.log('=== スクリプト読み込み開始 ===');
     console.log('script.js読み込み前');
   </script>
-  <script src="../js/script.js"></script>
+  <script src="script.js"></script>
   <script>
     console.log('script.js読み込み後、simulationData.js読み込み前');
   </script>
-  <script src="../data/simulationData.js"></script>
+  <script src="simulationData.js"></script>
   <script>
     console.log('simulationData.js読み込み後、future.js読み込み前');
     console.log('この時点でのsimulationCategories:', typeof window.simulationCategories, window.simulationCategories);
     console.log('この時点でのsimulationResults:', typeof window.simulationResults, window.simulationResults);
   </script>
-  <script src="../js/future.js"></script>
+  <script src="future.js"></script>
   <script>
     console.log('=== 全スクリプト読み込み完了 ===');
     console.log('最終的なsimulationCategories:', typeof window.simulationCategories, window.simulationCategories);
     console.log('最終的なsimulationResults:', typeof window.simulationResults, window.simulationResults);
-  </script>
-  <script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('nav-placeholder').innerHTML = html;
-        var script = document.createElement('script');
-        script.src = '../js/nav.js';
-        document.body.appendChild(script);
-      });
   </script>
 </body>
 </html> 
