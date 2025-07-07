@@ -52,7 +52,7 @@
     <div id="share-modal" class="share-modal" style="display:none;"></div>
   </main>
   <script>
-    fetch('../pages/nav.html')
+    fetch('/pages/nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;
