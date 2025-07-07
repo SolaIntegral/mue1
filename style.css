@@ -1325,4 +1325,120 @@ body {
     max-width: 98vw;
     padding: 10px 4px 8px 4px;
   }
+}
+
+/* === 本音ボックス === */
+.honne-box-section {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  margin: 40px auto 0 auto;
+  max-width: 600px;
+  padding: 32px 24px 32px 24px;
+}
+.honne-box-section h2 {
+  color: #4fc3e6;
+  font-size: 1.5em;
+  margin-bottom: 18px;
+}
+.honne-theme-area {
+  font-size: 1.1em;
+  margin-bottom: 18px;
+  color: #333;
+  font-weight: bold;
+}
+.honne-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.honne-form textarea, .honne-form input[type="number"] {
+  width: 100%;
+  font-size: 1em;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  background: #f6fbf9;
+  resize: none;
+}
+.honne-submit-btn {
+  background: #4fc3e6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+.honne-submit-btn:hover {
+  background: #0097a7;
+}
+.honne-list {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.honne-item {
+  background: #eaf6fb;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.honne-item-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.honne-item-text {
+  font-size: 1.1em;
+  color: #333;
+  flex: 1;
+}
+.honne-item-age {
+  font-size: 0.95em;
+  color: #888;
+  margin-left: 12px;
+}
+.honne-vote-btn {
+  background: #fff;
+  color: #4fc3e6;
+  border: 1px solid #4fc3e6;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+.honne-vote-btn.voted, .honne-vote-btn:disabled {
+  background: #4fc3e6;
+  color: #fff;
+  border: 1px solid #4fc3e6;
+  cursor: default;
+}
+.honne-item-votes {
+  font-size: 0.95em;
+  color: #0097a7;
+  margin-left: 8px;
+}
+.honne-result {
+  margin-top: 24px;
+  background: #f6fbf9;
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #333;
+  font-size: 1em;
+}
+@media (max-width: 600px) {
+  .honne-box-section {
+    padding: 18px 6px;
+    max-width: 98vw;
+  }
 } 

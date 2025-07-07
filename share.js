@@ -163,4 +163,149 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 初期表示
   renderList();
-}); 
+});
+
+// === 本音ボックス機能 ===
+(function () {
+  // お題（例）
+  const honneThemes = [
+    'サステナビリティで最近気になることは？',
+    'あなたが日常で感じる「もやもや」や「本音」を教えてください',
+    '未来の地球や社会について思うことは？'
+  ];
+  // 現在のお題（1つだけ表示）
+  let currentThemeIndex = 0;
+  // 本音データ構造: {id, themeIndex, text, age, votes, voters:[]}
+  let honneList = [];
+  if (localStorage.getItem('honneBoxData')) {
+    try {
+      honneList = JSON.parse(localStorage.getItem('honneBoxData'));
+    } catch (e) {
+      honneList = [];
+    }
+  }
+  // 投票履歴（ローカルのみ）
+  let votedIds = [];
+  if (localStorage.getItem('honneVotedIds')) {
+    try {
+      votedIds = JSON.parse(localStorage.getItem('honneVotedIds'));
+    } catch (e) {
+      votedIds = [];
+    }
+  }
+  // UI要素
+  const themeArea = document.getElementById('honne-theme-area');
+  const form = document.getElementById('honne-form');
+  const input = document.getElementById('honne-input');
+  const ageInput = document.getElementById('honne-age');
+  const listArea = document.getElementById('honne-list');
+  const resultArea = document.getElementById('honne-result');
+
+  // お題表示
+  function renderTheme() {
+    themeArea.innerHTML = `<span>${honneThemes[currentThemeIndex]}</span>`;
+  }
+
+  // 本音リスト表示
+  function renderList() {
+    if (!listArea) return;
+    listArea.innerHTML = '';
+    // お題ごとにフィルタ
+    const filtered = honneList.filter(h => h.themeIndex === currentThemeIndex);
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'honne-item';
+      div.innerHTML = `
+        <div class="honne-item-main">
+          <span class="honne-item-text">${escapeHTML(item.text)}</span>
+          <span class="honne-item-age">${item.age}歳</span>
+          <button class="honne-vote-btn${votedIds.includes(item.id) ? ' voted' : ''}" data-id="${item.id}" ${votedIds.includes(item.id) ? 'disabled' : ''}>投票</button>
+          <span class="honne-item-votes">${item.votes}票</span>
+        </div>
+      `;
+      div.querySelector('.honne-vote-btn').onclick = function () {
+        voteHonne(item.id);
+      };
+      listArea.appendChild(div);
+    });
+    renderResult(filtered);
+  }
+
+  // 投稿
+  form.onsubmit = function (e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    const age = parseInt(ageInput.value, 10);
+    if (!text || isNaN(age) || age < 6 || age > 120) {
+      alert('本音と年齢（6〜120歳）を正しく入力してください');
+      return;
+    }
+    // XSS対策: 入力値はエスケープして表示
+    const newItem = {
+      id: 'h' + Date.now() + Math.floor(Math.random()*1000),
+      themeIndex: currentThemeIndex,
+      text: text,
+      age: age,
+      votes: 0,
+      voters: []
+    };
+    honneList.push(newItem);
+    saveHonne();
+    input.value = '';
+    ageInput.value = '';
+    renderList();
+  };
+
+  // 投票
+  function voteHonne(id) {
+    if (votedIds.includes(id)) return;
+    const item = honneList.find(h => h.id === id);
+    if (!item) return;
+    item.votes++;
+    votedIds.push(id);
+    saveHonne();
+    saveVoted();
+    renderList();
+  }
+
+  // 結果集計・年齢層分析
+  function renderResult(list) {
+    if (!resultArea) return;
+    if (!list.length) {
+      resultArea.innerHTML = '<span style="color:#aaa;">まだ投稿がありません</span>';
+      return;
+    }
+    // 年齢層ごとに集計
+    const ageGroups = { '10代':0, '20代':0, '30代':0, '40代':0, '50代以上':0 };
+    list.forEach(item => {
+      if (item.age < 20) ageGroups['10代']++;
+      else if (item.age < 30) ageGroups['20代']++;
+      else if (item.age < 40) ageGroups['30代']++;
+      else if (item.age < 50) ageGroups['40代']++;
+      else ageGroups['50代以上']++;
+    });
+    let html = '<b>年齢層別投稿数：</b> ';
+    html += Object.entries(ageGroups).map(([k,v])=>`${k}:${v}`).join(' ／ ');
+    // 得票数トップの本音
+    const top = [...list].sort((a,b)=>b.votes-a.votes)[0];
+    html += `<br><b>最多得票：</b>「${escapeHTML(top.text)}」 (${top.votes}票)`;
+    resultArea.innerHTML = html;
+  }
+
+  // 保存
+  function saveHonne() {
+    localStorage.setItem('honneBoxData', JSON.stringify(honneList));
+  }
+  function saveVoted() {
+    localStorage.setItem('honneVotedIds', JSON.stringify(votedIds));
+  }
+  // XSS対策
+  function escapeHTML(str) {
+    return String(str).replace(/[&<>'"]/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c];
+    });
+  }
+  // 初期表示
+  if (themeArea) renderTheme();
+  if (listArea) renderList();
+})(); 
