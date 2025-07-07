@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>2050年の自分シミュレーション | 未来への羅針盤（Compass for Tomorrow）</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>2050年の自分シミュレーション | 未来への羅針盤（Compass for Tomorrow）</title>
   <link rel="stylesheet" href="style.css">
   <script>
     console.log('=== future.html head内スクリプト実行 ===');
@@ -43,6 +43,16 @@
     console.log('=== 全スクリプト読み込み完了 ===');
     console.log('最終的なsimulationCategories:', typeof window.simulationCategories, window.simulationCategories);
     console.log('最終的なsimulationResults:', typeof window.simulationResults, window.simulationResults);
+  </script>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+        var script = document.createElement('script');
+        script.src = 'nav.js';
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html> 

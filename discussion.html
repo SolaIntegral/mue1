@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>サステナディスカッションまとめ | 未来への羅針盤（Compass for Tomorrow）</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>サステナディスカッションまとめ | 未来への羅針盤（Compass for Tomorrow）</title>
   <link rel="stylesheet" href="style.css">
   <script>
     console.log('=== discussion.html head内スクリプト実行 ===');
@@ -38,6 +38,16 @@
   <script>
     console.log('=== 全スクリプト読み込み完了 ===');
     console.log('最終的なdiscussionData:', typeof window.discussionData, window.discussionData);
+  </script>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+        var script = document.createElement('script');
+        script.src = 'nav.js';
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html> 
