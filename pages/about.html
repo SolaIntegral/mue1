@@ -12,7 +12,7 @@
     <p>このページは仮の内容です。</p>
   </main>
   <script>
-    fetch('nav.html')
+    fetch('/pages/nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;
