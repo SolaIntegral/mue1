@@ -40,7 +40,7 @@
     console.log('最終的なdiscussionData:', typeof window.discussionData, window.discussionData);
   </script>
   <script>
-    fetch('/pages/nav.html')
+    fetch('nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;

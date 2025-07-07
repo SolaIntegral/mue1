@@ -45,7 +45,7 @@
     console.log('最終的なsimulationResults:', typeof window.simulationResults, window.simulationResults);
   </script>
   <script>
-    fetch('/pages/nav.html')
+    fetch('nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;
