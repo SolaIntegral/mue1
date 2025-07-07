@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>身近なサステナビリティ共有</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div id="nav-placeholder"></div>
@@ -32,19 +32,36 @@
       <h2>みんなのサステナブルな取り組み</h2>
       <div id="share-list" class="share-list-grid"></div>
     </section>
+    <section class="honne-box-section">
+      <h2>本音ボックス</h2>
+      <div id="honne-theme-area" class="honne-theme-area"></div>
+      <form id="honne-form" class="honne-form">
+        <div class="form-group">
+          <label for="honne-input">あなたの本音</label>
+          <textarea id="honne-input" rows="2" maxlength="120" placeholder="自由に本音を投稿してください"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="honne-age">年齢（数字のみ）</label>
+          <input type="number" id="honne-age" min="6" max="120" placeholder="例：20">
+        </div>
+        <button type="submit" class="honne-submit-btn">本音を投稿</button>
+      </form>
+      <div id="honne-list" class="honne-list"></div>
+      <div id="honne-result" class="honne-result"></div>
+    </section>
     <div id="share-modal" class="share-modal" style="display:none;"></div>
   </main>
   <script>
-    fetch('nav.html')
+    fetch('../pages/nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;
         var script = document.createElement('script');
-        script.src = 'nav.js';
+        script.src = '../js/nav.js';
         document.body.appendChild(script);
       });
   </script>
-  <script src="shareData.js"></script>
-  <script src="share.js"></script>
+  <script src="../data/shareData.js"></script>
+  <script src="../js/share.js"></script>
 </body>
 </html> 

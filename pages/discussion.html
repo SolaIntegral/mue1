@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>サステナディスカッションまとめ | 未来への羅針盤（Compass for Tomorrow）</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <script>
     console.log('=== discussion.html head内スクリプト実行 ===');
     console.log('現在のURL:', window.location.href);
@@ -25,16 +25,16 @@
     console.log('=== スクリプト読み込み開始 ===');
     console.log('script.js読み込み前');
   </script>
-  <script src="script.js"></script>
+  <script src="../js/script.js"></script>
   <script>
     console.log('script.js読み込み後、discussionData.js読み込み前');
   </script>
-  <script src="discussionData.js"></script>
+  <script src="../data/discussionData.js"></script>
   <script>
     console.log('discussionData.js読み込み後、discussion.js読み込み前');
     console.log('この時点でのdiscussionData:', typeof window.discussionData, window.discussionData);
   </script>
-  <script src="discussion.js"></script>
+  <script src="../js/discussion.js"></script>
   <script>
     console.log('=== 全スクリプト読み込み完了 ===');
     console.log('最終的なdiscussionData:', typeof window.discussionData, window.discussionData);

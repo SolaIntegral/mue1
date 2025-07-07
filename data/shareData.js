@@ -54,4 +54,16 @@ const shareData = [
       { user: 'クリーンマン', text: '地域のつながりが素敵です！' }
     ]
   }
-]; 
+];
+
+// 本音ボックス用データ
+const honneBoxData = {
+  theme: '「サステナビリティについて、今思うことを教えてください」',
+  posts: [
+    // { id, text, age, votes }
+    { id: 'h1', text: 'もっと身近な活動が増えてほしい', age: 22, votes: 3 },
+    { id: 'h2', text: '学校でもっと学びたい', age: 16, votes: 2 },
+    { id: 'h3', text: '大人も子どもも一緒に考えたい', age: 35, votes: 1 }
+  ]
+};
+window.honneBoxData = honneBoxData; 

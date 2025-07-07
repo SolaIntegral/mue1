@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>シンク・ジ・アースとは？</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div id="nav-placeholder"></div>
@@ -17,7 +17,7 @@
       .then(html => {
         document.getElementById('nav-placeholder').innerHTML = html;
         var script = document.createElement('script');
-        script.src = 'nav.js';
+        script.src = '../js/nav.js';
         document.body.appendChild(script);
       });
   </script>
