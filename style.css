@@ -1441,4 +1441,57 @@ body {
     padding: 18px 6px;
     max-width: 98vw;
   }
+}
+
+.honne-theme-list-area {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.honne-theme-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.honne-theme-btn {
+  background: #eaf6fb;
+  color: #0097a7;
+  border: 1px solid #b2dfdb;
+  border-radius: 16px;
+  padding: 6px 18px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.honne-theme-btn.selected {
+  background: #4fc3e6;
+  color: #fff;
+  border: 1px solid #4fc3e6;
+}
+.honne-theme-form {
+  display: flex;
+  gap: 6px;
+}
+.honne-theme-form input[type="text"] {
+  flex: 1;
+  font-size: 1em;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  background: #f6fbf9;
+}
+.honne-theme-submit-btn {
+  background: #4fc3e6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.honne-theme-submit-btn:hover {
+  background: #0097a7;
 } 

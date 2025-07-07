@@ -165,16 +165,31 @@ document.addEventListener('DOMContentLoaded', function () {
   renderList();
 });
 
-// === 本音ボックス機能 ===
+// === 本音ボックス機能（お題追加・選択対応） ===
 (function () {
-  // お題（例）
-  const honneThemes = [
+  // お題リスト（初期値）
+  let honneThemes = [
     'サステナビリティで最近気になることは？',
     'あなたが日常で感じる「もやもや」や「本音」を教えてください',
     '未来の地球や社会について思うことは？'
   ];
-  // 現在のお題（1つだけ表示）
+  // お題リストの保存・読込
+  if (localStorage.getItem('honneThemeList')) {
+    try {
+      honneThemes = JSON.parse(localStorage.getItem('honneThemeList'));
+    } catch (e) {}
+  }
+  function saveThemes() {
+    localStorage.setItem('honneThemeList', JSON.stringify(honneThemes));
+  }
+  // 現在選択中のお題index
   let currentThemeIndex = 0;
+  if (localStorage.getItem('honneCurrentThemeIndex')) {
+    currentThemeIndex = parseInt(localStorage.getItem('honneCurrentThemeIndex'), 10) || 0;
+  }
+  function saveCurrentTheme() {
+    localStorage.setItem('honneCurrentThemeIndex', currentThemeIndex);
+  }
   // 本音データ構造: {id, themeIndex, text, age, votes, voters:[]}
   let honneList = [];
   if (localStorage.getItem('honneBoxData')) {
@@ -194,6 +209,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   // UI要素
+  const themeListArea = document.getElementById('honne-theme-list');
+  const themeForm = document.getElementById('honne-theme-form');
+  const themeInput = document.getElementById('honne-theme-input');
   const themeArea = document.getElementById('honne-theme-area');
   const form = document.getElementById('honne-form');
   const input = document.getElementById('honne-input');
@@ -201,11 +219,49 @@ document.addEventListener('DOMContentLoaded', function () {
   const listArea = document.getElementById('honne-list');
   const resultArea = document.getElementById('honne-result');
 
+  // お題リスト表示
+  function renderThemeList() {
+    if (!themeListArea) return;
+    themeListArea.innerHTML = '';
+    honneThemes.forEach((theme, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'honne-theme-btn' + (idx === currentThemeIndex ? ' selected' : '');
+      btn.textContent = theme;
+      btn.onclick = function () {
+        currentThemeIndex = idx;
+        saveCurrentTheme();
+        renderThemeList();
+        renderTheme();
+        renderList();
+      };
+      themeListArea.appendChild(btn);
+    });
+  }
+  // 新規お題追加
+  if (themeForm) {
+    themeForm.onsubmit = function (e) {
+      e.preventDefault();
+      const val = themeInput.value.trim();
+      if (!val) return;
+      if (honneThemes.includes(val)) {
+        alert('同じお題が既に存在します');
+        return;
+      }
+      honneThemes.push(val);
+      saveThemes();
+      currentThemeIndex = honneThemes.length - 1;
+      saveCurrentTheme();
+      themeInput.value = '';
+      renderThemeList();
+      renderTheme();
+      renderList();
+    };
+  }
   // お題表示
   function renderTheme() {
+    if (!themeArea) return;
     themeArea.innerHTML = `<span>${honneThemes[currentThemeIndex]}</span>`;
   }
-
   // 本音リスト表示
   function renderList() {
     if (!listArea) return;
@@ -230,32 +286,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     renderResult(filtered);
   }
-
   // 投稿
-  form.onsubmit = function (e) {
-    e.preventDefault();
-    const text = input.value.trim();
-    const age = parseInt(ageInput.value, 10);
-    if (!text || isNaN(age) || age < 6 || age > 120) {
-      alert('本音と年齢（6〜120歳）を正しく入力してください');
-      return;
-    }
-    // XSS対策: 入力値はエスケープして表示
-    const newItem = {
-      id: 'h' + Date.now() + Math.floor(Math.random()*1000),
-      themeIndex: currentThemeIndex,
-      text: text,
-      age: age,
-      votes: 0,
-      voters: []
+  if (form) {
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      const text = input.value.trim();
+      const age = parseInt(ageInput.value, 10);
+      if (!text || isNaN(age) || age < 6 || age > 120) {
+        alert('本音と年齢（6〜120歳）を正しく入力してください');
+        return;
+      }
+      // XSS対策: 入力値はエスケープして表示
+      const newItem = {
+        id: 'h' + Date.now() + Math.floor(Math.random()*1000),
+        themeIndex: currentThemeIndex,
+        text: text,
+        age: age,
+        votes: 0,
+        voters: []
+      };
+      honneList.push(newItem);
+      saveHonne();
+      input.value = '';
+      ageInput.value = '';
+      renderList();
     };
-    honneList.push(newItem);
-    saveHonne();
-    input.value = '';
-    ageInput.value = '';
-    renderList();
-  };
-
+  }
   // 投票
   function voteHonne(id) {
     if (votedIds.includes(id)) return;
@@ -267,7 +323,6 @@ document.addEventListener('DOMContentLoaded', function () {
     saveVoted();
     renderList();
   }
-
   // 結果集計・年齢層分析
   function renderResult(list) {
     if (!resultArea) return;
@@ -291,7 +346,6 @@ document.addEventListener('DOMContentLoaded', function () {
     html += `<br><b>最多得票：</b>「${escapeHTML(top.text)}」 (${top.votes}票)`;
     resultArea.innerHTML = html;
   }
-
   // 保存
   function saveHonne() {
     localStorage.setItem('honneBoxData', JSON.stringify(honneList));
@@ -306,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
   // 初期表示
-  if (themeArea) renderTheme();
-  if (listArea) renderList();
+  renderThemeList();
+  renderTheme();
+  renderList();
 })(); 
